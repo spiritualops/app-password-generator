@@ -1,3 +1,5 @@
+
+import { FormsModule } from '@angular/forms';
 import { FormComponent } from './form/form.component';
 import { GeneratorComponent } from './generator/generator.component';
 import { MaterialModule } from './shared/material.module';
@@ -19,6 +21,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule,
     MaterialModule
   ],
   providers: [],

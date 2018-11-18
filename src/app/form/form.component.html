@@ -1,21 +1,24 @@
-<form>
-  <article>
-    <mat-form-field appearance="outline">
-      <mat-label>Chars</mat-label>
-      <input matInput placeholder="9" type="number" [min]="1" [max]="10" [value]="charsIn">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Numbers</mat-label>
-      <input matInput placeholder="6" type="number" [min]="1" [max]="10" [value]="numsIn">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Symbols</mat-label>
-      <input matInput placeholder="3" type="number" [min]="1" [max]="10" [value]="symsIn">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Passwords</mat-label>
-      <input matInput placeholder="1" type="number" [min]="1" [max]="10" [value]="pwsIn">
-    </mat-form-field>
-    <button mat-button (click)="onSubmit()">Submit</button>
-  </article>
-</form>
+<article>
+  <mat-form-field appearance="outline">
+    <mat-label>Chars</mat-label>
+    <input matInput name="charsIn" type="number" [min]="1" [max]="10" [(ngModel)]="charsIn">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Numbers</mat-label>
+    <input matInput name="numsIn" type="number" [min]="1" [max]="10" [(ngModel)]="numsIn">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Symbols</mat-label>
+    <input matInput name="symsIn" type="number" [min]="1" [max]="10" [(ngModel)]="symsIn">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Passwords</mat-label>
+    <input matInput name="pwsIn" type="number" [min]="1" [max]="10" [(ngModel)]="pwsIn">
+  </mat-form-field>
+  <button mat-button (click)="onSubmit()">Submit</button>
+</article>
+<ul>
+  <li *ngFor="let password of passwords">
+    {{password}}
+  </li>
+</ul>

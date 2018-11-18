@@ -7,16 +7,21 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class FormComponent implements OnInit, OnDestroy {
 
-  readonly charsIn: number;
-  readonly numsIn: number;
-  readonly symsIn: number;
-  readonly pwsIn: number;
+  public charsIn: number;
+  numsIn: number;
+  symsIn: number;
+  public pwsIn: number;
+
+  passwords: Array<string>;
 
   constructor() {
   }
 
   ngOnInit() {
-    // TODO
+    this.charsIn = 0;
+    this.numsIn = 0;
+    this.symsIn = 0;
+    this.pwsIn = 0;
   }
 
   ngOnDestroy() {
@@ -24,28 +29,31 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private onSubmit() {
-    this.generateSequence(this.charsIn, this.numsIn, this.symsIn, this.pwsIn);
+    console.log(this.pwsIn);
+    this.createPasswords(this.charsIn, this.numsIn, this.symsIn, this.pwsIn);
   }
 
-  private shuffle(characterSequence: string, numberSequence: string, symbolSequence: string): string {
-    const sequence = characterSequence + numberSequence + symbolSequence;
+  private shuffle(characters: string, numbers: string, symbols: string): string {
+    const shuffledPassword = characters + numbers + symbols;
+    let splitPassword = shuffledPassword.split('');
 
-    while (sequence.length > 0) {
-      // TODO
+    for (let i = 0; i < splitPassword.length - 1 ; i++) {
+      console.log(splitPassword.length);
+      const pseudoIndex = Math.floor(Math.random() * (splitPassword.length - 1));
+      splitPassword = this.swap(pseudoIndex, i, splitPassword);
     }
 
-    return '';
+    return splitPassword.join('');
   }
 
-  private swap() {
-    // todo
+  private swap(to: number, from: number, arr: Array<string>): Array<string> {
+    const tmp = arr[to];
+    arr[to] = arr[from];
+    arr[from] = tmp;
+    return arr;
   }
 
-  private generateSequence(chars: number, nums: number, syms: number, pws: number): void {
-    this.createPasswordSequence(pws, chars, nums, syms);
-  }
-
-  private createCharacterSequence(chars: number): string {
+  private createCharacters(chars: number): string {
     // 65 - 90
     const pseudoCharacters = [];
 
@@ -62,10 +70,11 @@ export class FormComponent implements OnInit, OnDestroy {
       chars--;
     }
 
+    console.log(pseudoCharacters);
     return pseudoCharacters.join('');
   }
 
-  private createNumberSequence(nums: number): string {
+  private createNumbers(nums: number): string {
     // 48 - 57
     const pseudoNumbers = [];
 
@@ -75,32 +84,38 @@ export class FormComponent implements OnInit, OnDestroy {
       nums--;
     }
 
+    console.log(pseudoNumbers);
     return pseudoNumbers.join('');
   }
 
-  private createSymbolSequence(syms: number): string {
+  private createSymbols(syms: number): string {
     // 33 - 47
     const pseudoSymbols = [];
 
     while (syms > 0) {
       const pseudoSymbol = String.fromCharCode(Math.floor(Math.random() * 15) + 33);
       pseudoSymbols.push(pseudoSymbol);
+      syms--;
     }
 
+    console.log(pseudoSymbols);
     return pseudoSymbols.join('');
   }
 
-  private createPasswordSequence(pws: number, chars: number, nums: number, syms: number): Array<string> {
+  private createPasswords(pws: number, chars: number, nums: number, syms: number): Array<string> {
     const passwords = [];
 
     while (pws > 0) {
-      const characterSequence = this.createCharacterSequence(chars);
-      const numberSequence = this.createNumberSequence(nums);
-      const symbolSequence = this.createSymbolSequence(syms);
-      passwords.push(this.shuffle(characterSequence, numberSequence, symbolSequence));
+      const characters = this.createCharacters(chars);
+      console.log(characters);
+      const numbers = this.createNumbers(nums);
+      const symbols = this.createSymbols(syms);
+      passwords.push(this.shuffle(characters, numbers, symbols));
       pws--;
     }
 
+    console.log(passwords);
+    this.passwords = passwords;
     return passwords;
   }
 
